@@ -18,4 +18,52 @@ describe("vending machine", () => {
     });
     expect(machine.balance).to.equal(500); // Use an ES6 getter
   });
+  it("should reset balance and till", () => {
+    const machine = new VendingMachine();
+
+    machine.insertCoin(500);
+    machine.changeReturn();
+
+    expect(machine.till).to.deep.equal({
+      10: 0,
+      50: 0,
+      100: 0,
+      500: 0,
+    });
+    expect(machine.balance).to.equal(0);
+  });
+
+  it("should select row", () => {
+    const machine = new VendingMachine();
+
+    machine.pressButton("A");
+
+    expect(machine.selectedRow).to.equal("A");
+  });
+  it("should select column", () => {
+    const machine = new VendingMachine();
+
+    machine.pressButton(1);
+
+    expect(machine.selectedColumn).to.equal(1);
+  });
+
+  it("should select column", () => {
+    const machine = new VendingMachine();
+
+    machine.pressButton("B");
+    machine.pressButton(3);
+
+    expect(machine.selectedColumn).to.equal(3);
+    expect(machine.selectedRow).to.equal("B");
+  });
+
+  it("should select column", () => {
+    const machine = new VendingMachine();
+    machine.insertCoin(500);
+    machine.pressButton("A");
+    machine.pressButton(1);
+
+    expect(machine.balace).to.equal(150);
+  });
 });
