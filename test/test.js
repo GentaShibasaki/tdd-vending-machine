@@ -58,12 +58,30 @@ describe("vending machine", () => {
     expect(machine.selectedRow).to.equal("B");
   });
 
-  it("should select column", () => {
+  it("should return correct change", () => {
     const machine = new VendingMachine();
     machine.insertCoin(500);
     machine.pressButton("A");
     machine.pressButton(1);
 
-    expect(machine.balace).to.equal(150);
+    expect(machine.dispenseProduct()).to.equal(150);
+  });
+
+  it("should log an error message if there is no investory", () => {
+    const machine = new VendingMachine();
+    machine.insertCoin(500);
+    machine.pressButton("C");
+    machine.pressButton(1);
+
+    expect(machine.dispenseProduct()).to.equal(`This is not available!!`);
+  });
+
+  it("should log an error message if the balance is insufficient", () => {
+    const machine = new VendingMachine();
+    machine.insertCoin(100);
+    machine.pressButton("A");
+    machine.pressButton(1);
+
+    expect(machine.dispenseProduct()).to.equal("your balance is insufficient");
   });
 });
